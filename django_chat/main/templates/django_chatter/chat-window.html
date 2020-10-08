@@ -1,0 +1,33 @@
+{% extends "django_chatter/base_chat.html"%}
+{% block content_body_css%}
+style="height:auto !important;"
+
+{% endblock content_body_css%}
+
+{%load staticfiles%}
+<!-- 
+<title>Chat on Report: AkshyaPower</title>
+-->
+{% block navbar %}
+{% endblock navbar %}
+
+{% block content-style%} style="margin-top:0px;padding-top:10px"{% endblock content-style%}
+{% block content %}
+    <div id="root"></div>
+{% endblock content %}
+{% block script%}
+
+{{ room_name|json_script:"room_name" }}
+{{ uuid|json_script:"room_id" }}
+{{ user.username|json_script:"username" }}
+{{user.id|json_script:"user_id"}}
+<script src="{% static 'chat/main.js'%}"></script>
+
+
+{% endblock script%}
+{% block include_js%}
+{% endblock include_js%}
+{% block site_select_js %}
+{% endblock site_select_js %}
+
+

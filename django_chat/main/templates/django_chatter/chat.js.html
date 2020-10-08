@@ -1,0 +1,35 @@
+{% load static %}
+
+<script>
+	var room_id = '{{room_uuid_json}}';
+	var get_room_url = '{% url "django_chatter:get_messages" uuid=room_uuid_json %}';
+	var username = '{{user.username}}';
+
+$(function(){
+
+$('body').on('click', '[data-toggle="modal"]', function(){
+        $($(this).data("target")+' .modal-body').load($(this).attr("href"));
+     }); 
+
+
+});
+</script>
+        <script type="text/javascript" src="{% static 'emojionarea/emojionearea.min.js' %}"></script>
+<script type="text/javascript">
+  
+    $("#send-message").emojioneArea();
+  
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+<script src = "{% static 'js/dateFormatter.js' %}"></script>
+<script src = "{% static 'js/websocketHelpers.js' %}"></script>
+<script src = "{% static 'js/chatSocket.js' %}"></script>
+<script src = "{% static 'js/alertSocket.js' %}"></script>
+<script src = "{% static 'js/chatWindow.js' %}"></script>
+<script src = "{% static 'js/fetchMessages.js' %}"></script>
+<script src = "{% static 'js/userliveSocket.js' %}"></script>
+<script>
+  
+
+</script>
+

@@ -1,0 +1,31 @@
+<div class="animated bounceInUp col-md-3" id="leftSquare" style="float:right">
+
+
+<div class="row">
+<div class="col-lg-8">
+<h1 class="title"><a href="/">AkshyaPower</a></h1>
+</div>
+
+<i class="down fa fa-chevron-down" aria-hidden="true"></i>
+<i class="bell fa fa-bell-o fa-lg" aria-hidden="true"></i>
+</div>
+<div class="row">
+<div id="circle"></div>
+<h2 id="subtitle">{{user}}</h2>
+</div>
+<div class="row" style="margin-top:70px">
+<h2  id="channels">CHANNELS<span id="light">(29)</span> <i class="add fa fa-plus-circle fa-inverse" aria-hidden="true"></i> </h2>
+</div>
+<div class="row">
+<ul class="channels-list">
+{%for room in rooms_list%}
+<a href="{% url 'django_chatter:chatroom' uuid=room.id %}">
+<li>
+<h2 class="channel"># {{room.name}}</h2>
+</li>
+</a>
+{%endfor%}
+</ul>
+</div>
+</div>
+

@@ -1,0 +1,19 @@
+{%load bootstrap3%}
+
+<h3>Previous Discussions on this report</h3>
+<ul>
+{%for room in rooms_list%}
+<li>
+<a href="{% url 'django_chatter:chatroom' uuid=room.id %}">{{room.name}}</a>
+</li>
+{%empty%}
+<li>No previous discssuons! </li>
+{%endfor%}
+</ul>
+<hr>
+<h3>Or Start a New Discussion</h3>
+<p><small>Choose users to discuss with</small></p>
+<form action="{{url}}" class="create-room-form" method="post">{%csrf_token%}
+{%bootstrap_form form%} 
+<button type="submit">Submit</button>
+</form>	

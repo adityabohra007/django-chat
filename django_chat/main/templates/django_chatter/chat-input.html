@@ -1,0 +1,17 @@
+{% load static %}
+
+<div class = "input-container row no-gutters">
+    <div class="col-md-1 col-sm-2" style="align-self:center;text-align:center"><i class="material-icons" id="add-file" style="cursor:pointer">add</i></div>
+    <div class="col-md-10 col-sm-8" style="align-self:center"><input data-emojiable="true" type="text" id = "send-message" rows = "1" placeholder = "Type your message..."></div>
+    <div class="col-md-1 col-sm-2" style="align-self:center;text-align:center">
+    <i id="send-button" role="button" class="material-icons">send</i>
+    </div>      
+</div>
+<script type="text/javascript">
+  
+    $("#send-message").emojioneArea();
+</script>
+
+<script>
+</script>
+

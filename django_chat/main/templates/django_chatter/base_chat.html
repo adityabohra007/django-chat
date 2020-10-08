@@ -1,0 +1,71 @@
+{% load notifications_tags %} {%load staticfiles%} {% notifications_unread as unread_count %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link      rel="shortcut icon"      type="image/x-icon"      href="../../assets/img/favicon.png"    />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <title>{% block title %}Reportly by AkshyaPower{% endblock title %}</title>
+    <!-- css.html(template css)-->
+    {% include 'partials/gray.js.html'%}
+    {% include "main/snippets/css.html"%}
+    <!-- datepicker -->
+    {% include "main/snippets/bckup_href.html"%}
+    <style>
+        .custom colgroup col.daily{background:aliceblue}
+        .custom colgroup col.monthly{background:#a3dfc3}
+        .custom colgroup col.yearly{background:lavender}
+    </style>
+    <link rel="stylesheet" href="{% static 'CSS-Checkbox-Library-master/dist/css/checkboxes.min.css' %}">
+    {%if color_mode == "dark" %}
+    <style>{% include 'main/dark-theme.css'%} </style>
+    {%else%}
+    {%endif%}
+    {% block css%}{% endblock css%}
+  </head>
+  <body class="">
+    {% include "main/snippets/base_aside.html"%}
+    <div class="content ht-100v pd-0">
+        {% block content %}
+        {% endblock content%}
+    </div>
+    {% csrf_token%}
+    <!-- content -->
+        {% include "main/snippets/template.js.html"%}
+    {% include 'main/snippets/base_js.html'%}
+
+    <script>
+        $(".aside-menu-link").click(function(){
+        	var minclass=$("aside").hasClass("minimize");
+            if(minclass){
+                console.log("smaller");
+                $(".sitecolor").show();
+            }
+            else{
+                $(".sitecolor").hide();
+            }
+            	console.log(minclass);
+            })
+$(".sitecolor input").change(function(){
+    console.log("changed");
+    var url = "{% url 'sitecolor'%}";
+    var value=$(".sitecolor input").is(":checked");
+    console.log(value);
+    $.post(url,{"sitecolor":value,
+                "csrfmiddlewaretoken":$("input[name=csrfmiddlewaretoken]").val()})
+            .done(function(data){
+                console.log(data);
+                console.log("sitecolor is sent");
+                if(data.response=="Ok"){
+                    toastnotify("Reloading .....");
+                    location.reload();
+                }
+                else{
+                    alert("Unable to Change Site Theme");
+                }
+            });
+})
+    </script>
+    {% block script%} {% endblock script%}
+  </body>
+
+</html>

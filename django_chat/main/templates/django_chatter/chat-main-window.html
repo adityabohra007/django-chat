@@ -1,0 +1,67 @@
+<div class="rightSquare col-md-9" style="box-shadow: 2px 2px 2px 2px black;padding-left: 0px;padding-right: 0px;">
+<div class="animated bounceInDown" id="header">
+<div class="col-lg-12">
+    <h2 id="channel-title">#{{room_name}}</h2>
+</div>
+<div class="col-lg-12 mb-2" id="member-list" style="display:flex">
+    <p class="members-list my-0"><b>Members:</b></p>
+</div>
+<div class="col-lg-12">
+<!--<div id="icons" class="col-lg-6">
+    <a href=""><i class="star fa fa-star-o" aria-hidden="true"></i></a>
+    <a href="add" data-toggle="modal" data-target="#exampleModal" ><i class="user fa fa-user-o" aria-hidden="true"></i></a>
+    <a href=""><i class="pin fa fa-thumb-tack" aria-hidden="true"></i></a>
+</div>-->
+<!--<div class="col-lg-6">
+    Reference Report: <a href="/portfolio/?report_format={{room_report.report.id}}&date={{room_report.report_date.year}}-{{room_report.report_date.month}}-{{room_report.report_date.day}}&is_download=true">View</a>
+</div>-->
+</div>
+
+	<div class="col-lg-12">
+<hr style="padding:0;margin:0">
+</div>
+			<div id = "chat-dialog" class="col-lg-12">
+					<!--AI==========================================================
+						Fetch latest 50 messages and display them properly.
+					===========================================================AI-->
+					{% for message in latest_messages_curr_room reversed %}
+						{% if message.sender.username == user.username %}
+							<div class="message-container">
+								<div class="message message-sent">
+                                    {% if message.file %}
+                                     <img width=50% src="/media/{{ message.file }}">
+                                     {% else %}
+                                     {% endif %}
+                                    {% if message.text %}
+									{{message.text}}
+                                    {% else %}
+                                    {%endif %}
+								</div>
+								<div class="message message-sent message-date-created">
+									{{message.date_created|date:"d M Y H:i:s e"}}
+								</div>
+							</div>
+						{% else %}
+							<div class="message-container">
+								<div class="message-received-container">
+									<div class="receiver-bubble">
+										{{message.sender|make_list|first|title}}
+									</div>
+									<div class="message message-received">
+										{{message.text}}
+									</div>
+								</div>
+								<div class="message message-received message-date-created
+									message-received-date-created">
+									{{message.date_created|date:"d M Y H:i:s e"}}
+								</div>
+
+							</div>
+						{% endif %}
+					{% endfor %}
+				</div>
+{% include 'django_chatter/chat-input.html'%}
+	
+
+</div>
+</div>

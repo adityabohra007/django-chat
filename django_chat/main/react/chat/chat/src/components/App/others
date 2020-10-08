@@ -1,0 +1,116 @@
+const  chatScript=()=>{
+//    const room_id = 'room_uuid_json';
+//	var get_room_url = '{% url "django_chatter:get_messages" uuid=room_uuid_json %}';
+//	var username = '{{user.username}}';
+
+
+//$('body').on('click', '[data-toggle="modal"]', function(){ $($(this).data("target")+' .modal-body').load($(this).attr("href"));});
+
+
+ /*   return(
+    </script>
+<script src = "{% static 'js/dateFormatter.js' %}"></script>
+<script src = "{% static 'js/websocketHelpers.js' %}"></script>
+<script src = "{% static 'js/chatSocket.js' %}"></script>
+<script src = "{% static 'js/alertSocket.js' %}"></script>
+<script src = "{% static 'js/chatWindow.js' %}"></script>
+<script src = "{% static 'js/fetchMessages.js' %}"></script>
+<script src = "{% static 'js/userliveSocket.js' %}"></script>
+<script>
+
+
+</script>
+
+    )*/
+}
+
+
+
+
+
+
+function chatInput(){
+    return(
+    <div class = "input-container row no-gutters">
+    <div class="col-md-1 col-sm-2" style="align-self:center;text-align:center">
+        <i class="material-icons" id="add-file" style="cursor:pointer">add</i>
+    </div>
+    <div class="col-md-10 col-sm-8"
+        style="align-self:center">
+        <input data-emojiable="true"
+        type="text"
+        id = "send-message"
+        rows = "1"
+        placeholder = "Type your message..."></div>
+
+        <div class="col-md-1 col-sm-2" style="align-self:center;text-align:center">
+        <i id="send-button" role="button" class="material-icons">send</i>
+    </div>
+</div>
+    )
+}
+
+
+
+
+
+
+function chatModel(){
+/*        $(document).ready(function(){
+        $("#add-file").click(function(){
+        console.log("click");
+        $("#sendbutton").trigger("click");
+            })
+        //})*/
+
+
+return(
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+<button hidden  type="button" class="btn btn-primary" data-toggle="modal" id="sendbutton" data-target="#SendImage">
+  Launch demo modal
+</button>
+
+<div class="modal fade" id="SendImage" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" >
+  <div class="modal-dialog" role="document" style="margin-top:20%">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Add Image </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        	 load jfutags
+  <div class="jfuWrapper"> jfu 'django_chatter/photo_upload_form.html' 	</div>
+
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+)
+
+}
+
+

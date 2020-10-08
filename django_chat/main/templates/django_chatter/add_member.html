@@ -1,0 +1,8 @@
+{%load bootstrap3%}
+
+<h3>Add new member to this discussion</h3>
+<p><small>Choose users to discuss with</small></p>
+<form action="{{url}}" class="create-room-form" method="post">{%csrf_token%}
+{%bootstrap_form form%} 
+<button type="submit">Submit</button>
+</form>	
