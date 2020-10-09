@@ -23,22 +23,18 @@ from .serializers import *
 from .models import Room, Message
 from .utils import create_room
 from .forms import *
-from main.models import ReportChat
 import json
 from django.contrib.auth.models import User
 # import the logging library
 import logging
 
-#jfu imports
 
 import os
 
 
 from django.views import generic
 from django.views.decorators.http import require_POST
-from jfu.http import upload_receive, UploadResponse, JFUResponse
 
-#jfu views
 @require_POST
 def upload( request ):
 
@@ -320,7 +316,8 @@ class ExistingRoomMember(generics.ListAPIView):
 
 
 
-
+def index(request):
+    return render(request,'base.html',{})
 
 
 

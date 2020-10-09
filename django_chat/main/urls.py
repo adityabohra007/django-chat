@@ -9,6 +9,7 @@ urlpatterns = [
 	path('chat', views.ChatRoomView.as_view(), name = "chatroom"),
 #	path('chat/<str:uuid>/add/', views.AddMemberView.as_view(), name = "add_member"),
 
+        path('mini',views.index),
 	#AJAX paths
 	path('ajax/users-list/', views.users_list, name = "users_list"),
 	path('ajax/get-chat-url/', views.get_chat_url, name = "get_chat_url"),

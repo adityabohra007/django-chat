@@ -1,27 +1,26 @@
 from rest_framework import serializers
 from .models import Room,Message,Client
 from django.contrib.auth.models import User
-from main.models import UserCompany,Company
+#from main.models import UserCompany,Company
 class MemberSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields=['id']
 
 
-class CompanySerializer(serializers.ModelSerializer):
-    class Meta:
-        model=Company
-        fields=["name","city","country"]
+# class CompanySerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model=Company
+#         fields=["name","city","country"]
 
-class UserCompanySerializer(serializers.ModelSerializer):
-    company = CompanySerializer()
-    class Meta:
-        model =UserCompany
-        fields=['company']
+# class UserCompanySerializer(serializers.ModelSerializer):
+#     company = CompanySerializer()
+#     class Meta:
+#         model =UserCompany
+#         fields=['company']
 
 
 class UserSerializer(serializers.ModelSerializer):
-    usercompany = UserCompanySerializer()
     class Meta:
         model= User
         fields=['id','username','usercompany']
@@ -29,7 +28,6 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class MemberDetailsSerializer(serializers.ModelSerializer):
-    usercompany=UserCompanySerializer()
     class Meta:
         model = User
         fields=["id","username","usercompany"]
@@ -40,11 +38,6 @@ class RoomMemberDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = Room
         fields = ['id','name','members']
-#    def update(self,instance,validated_data):
-#        members=validated_data.pop('members')
-#        for member in members:
-#            instance.members.add(member)
-#        return instance
 
 
 
