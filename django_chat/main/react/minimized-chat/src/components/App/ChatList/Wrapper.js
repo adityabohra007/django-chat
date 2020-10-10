@@ -1,35 +1,23 @@
-import React, {useEffect, useState} from 'react';
-import {StyleWebsocketStatus, StyledDataList} from './style';
-import ChatMessage from './Message';
-import ChatRoomList from './Room';
+import React,{useEffect,useState} from 'react';
+import Component from './Component';
+import Message from './../Message';
+import Room from './../Room';
 
-const ChatList = props => {
+
+const Wrapper=(props)=>{
   var dataList = [];
   const [isLoading, setIsLoading] = useState(true);
   const [chatStatus, setChatStatus] = useState(props.status);
   console.log(props.data);
   console.log(props);
-
-  useEffect(() => {
-    setChatStatus(props.status);
-  }, [props.status]);
-  const scrollToBottom = event => {
-    var list = document.getElementById('chat').children[0];
-    list.scrollTop = list.scrollTopMax;
-  };
-  const scrollToTop = event => {
-    var list = document.getElementById('chat').children[0];
-    list.scrollTop = 0;
-  };
-console.log("data - list")
   if (props.type) {
     dataList = props.data.map(d => (
-      <ChatRoomList onClick={props.onClick} name={d.name} id={d.id} />
+      <Room onClick={props.onClick} name={d.name} id={d.id} />
     ));
   } else {
     if(props.data[0].text!=undefined){
     dataList = props.data.map(data => (
-      <ChatMessage
+      <Message
         onClick={props.onClick}
         id={data.id}
         text={data.text}
@@ -45,27 +33,14 @@ console.log("data - list")
       }
 
   }
-  console.log(dataList);
-  useEffect(() => {
-    //setIsLoading(false);
-    if (props.user && !isLoading) {
-      console.log('Data is here $$');
-      scrollToBottom();
-    } else {
-      scrollToTop();
-    }
-    console.log('-------------------------------------------------');
-  }, [props.data, isLoading]);
-  useEffect(() => {
-    if (isLoading) {
-      setIsLoading(false);
-    }
-  }, [isLoading]);
-
-  useEffect(() => {
-    setChatStatus(props.status);
-    console.log('setting chatStatus');
-  }, [props.status]);
+  const scrollToBottom = event => {
+    var list = document.getElementById('chat').children[0];
+    list.scrollTop = list.scrollTopMax;
+  };
+  const scrollToTop = event => {
+    var list = document.getElementById('chat').children[0];
+    list.scrollTop = 0;
+  };
   const status = () => {
     console.log('chatStatus' + chatStatus);
     if (chatStatus == 0) {
@@ -94,11 +69,38 @@ console.log("data - list")
     }
   };
 
-  return (
-    <StyledDataList>
-      {status}
-      {dataList}
-    </StyledDataList>
-  );
-};
-export default ChatList;
+  useEffect(() => {
+    setChatStatus(props.status);
+  }, [props.status]);
+
+
+  useEffect(() => {
+    //setIsLoading(false);
+    if (props.user && !isLoading) {
+      console.log('Data is here $$');
+      scrollToBottom();
+    } else {
+      scrollToTop();
+    }
+    console.log('-------------------------------------------------');
+  }, [props.data, isLoading]);
+  useEffect(() => {
+    if (isLoading) {
+      setIsLoading(false);
+    }
+  }, [isLoading]);
+
+  useEffect(() => {
+    setChatStatus(props.status);
+    console.log('setting chatStatus');
+  }, [props.status]);
+
+
+return(
+
+<Component {...props} dataList={dataList} status={status}/>
+)
+}
+
+
+export default Wrapper;

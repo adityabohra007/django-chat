@@ -13,7 +13,7 @@ from django.contrib.auth import (
 from django.db.models import Count
 from django.http import Http404
 
-from django_chatter.models import Room
+from .models import Room
 
 import traceback
 

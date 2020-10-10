@@ -1,0 +1,31 @@
+{% load static %}
+<html>
+     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap" rel="stylesheet">
+ <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap" rel="stylesheet"> 
+    <style>
+h4,h3,p{font-family: 'Poppins', sans-serif;}
+.header{
+    text-align:center;
+}
+    </style>
+    <body>
+
+        <div>
+            <div><h4>Basic Django Chat</h4></div> 
+            <div class="header">
+                <h3>Large/Small Chat</h3>
+                <p>Easily Configurable</p>
+            </div>
+
+        </div>
+        <div id="mini-chat"></div>
+    {{ user.username|json_script:"username" }}
+
+        <script>
+
+        </script>
+   <script src="{% static 'minimized-chat/main.js' %}"></script>
+
+    </body>
+
+</html>

@@ -1,48 +1,16 @@
-import React, {useState, useEffect} from 'react';
-import {FaArrowLeft} from 'react-icons/fa';
-import {MdSend} from 'react-icons/md';
-import ChatForm from './Send';
-import ChatList from './ChatList';
-import {StyledHeader, StyledDataList, StyleMiniChatWrapper} from './style.js';
-function App() {
-  return <Chat />;
-}
-
-const ChatHeader = props => {
-  const isUserList = props.type ? (
-    <h4 className={'chat-header'} onClick={props.onClick}>
-      {props.heading}
-    </h4>
-  ) : (
-    <>
-      <p
-        id="chat-back"
-        onClick={() => {
-          props.onClickBack();
-        }}>
-        <FaArrowLeft />
-      </p>
-      <h4 className={'chat-header'} onClick={props.onClick}>
-        {props.heading}
-      </h4>
-    </>
-  );
-  return (
-    <StyledHeader className="clearfix">
-      {isUserList}
-      <span className="chat-message-counter">3</span>
-    </StyledHeader>
-  );
-};
-
-const Chat = () => {
-  let userId = '';
-  try {
-    userId = JSON.parse(document.querySelector('#user_id').textContent);
-  } catch (TypeError) {
-    userId = '1';
-  }
-
+import React,{useEffect,useState} from 'react';
+import Component from './Component';
+const Wrapper=(props)=>{
+  var chat_url = room_id => {
+    let ws_or_wss = window.location.protocol == 'https:' ? 'wss://' : 'ws://';
+    let websocket_url =
+      ws_or_wss +
+      window.location.host +
+      '/ws/django_chatter/chatrooms/chat/' +
+      room_id +
+      '/';
+    return websocket_url;
+  };
   const messages = [
     {
       //room_name:"Room",
@@ -59,26 +27,6 @@ const Chat = () => {
     },
   ];
   const user = JSON.parse(document.getElementById('username').textContent);
-  const findLatestMessageID = () => {
-    try {
-      var selector = document.querySelector('#message_list div div');
-      return selector.getAttribute('data-id');
-    } catch (SyntaxError) {
-      return 0;
-    }
-  };
-
-  var chat_url = room_id => {
-    let ws_or_wss = window.location.protocol == 'https:' ? 'wss://' : 'ws://';
-    let websocket_url =
-      ws_or_wss +
-      window.location.host +
-      '/ws/django_chatter/chatrooms/chat/' +
-      room_id +
-      '/';
-    return websocket_url;
-  };
-
   const [userName, setUserName] = useState(user);
   const [isUserlist, setIsUserList] = useState(true);
   const [userList, setUserList] = useState([]);
@@ -93,7 +41,19 @@ const Chat = () => {
   const [messageSave, setMessageSave] = useState('');
   const [MemberReference,setMemeberReference] = useState([]);
   const [latestRef,setLatestRef] = useState([])
-  /* Websocket */
+
+  const minimizeChat = () => {
+    var liveWrapper = document.getElementById('live-chat');
+    if (liveWrapper.classList.contains('chat-close')) {
+      liveWrapper.classList.remove('chat-close');
+      liveWrapper.style.bottom = '0px';
+    } else {
+      liveWrapper.classList.add('chat-close');
+      liveWrapper.style.bottom =
+        '-' + document.querySelector('#chat').offsetHeight + 'px';
+    }
+  };
+
   const chatWebsocket = () => {
     console.log(chatsocketURL);
     var chatws = new WebSocket(chatsocketURL);
@@ -144,53 +104,6 @@ const Chat = () => {
     };
   };
 
-  /* fetch api rooms */
-  const FETCH_ROOM_URL = window.origin + '/chat/api/' + userId + '/rooms';
-  //    const FETCH_ROOM_URL = "http://localhost:8081" + '/chat/api/' + userId + '/rooms';
-  console.log(FETCH_ROOM_URL);
-
-  const fetchRoomData = () => {
-    fetch(FETCH_ROOM_URL)
-      .then(res => res.json())
-      .then(result => {
-        console.log(result);
-        setUserList(result);
-      });
-  };
-
-  useEffect(() => {
-    console.log(user);
-    fetchRoomData();
-  }, []);
-
-  useEffect(() => {
-    if (chatLoading == true && roomId) {
-      chatWebsocket();
-    }
-  }, [roomId]);
-
-  useEffect(() => {
-    try {
-      console.log(chatsocket.readyState);
-      console.log(')))))))))))))))))');
-    } catch {
-      console.log('error');
-    }
-  }, [chatsocket]);
-  const minimizeChat = () => {
-    var liveWrapper = document.getElementById('live-chat');
-    if (liveWrapper.classList.contains('chat-close')) {
-      liveWrapper.classList.remove('chat-close');
-      liveWrapper.style.bottom = '0px';
-    } else {
-      liveWrapper.classList.add('chat-close');
-      liveWrapper.style.bottom =
-        '-' + document.querySelector('#chat').offsetHeight + 'px';
-    }
-  };
-  // const  userrefReg = new RegExp(/[^a-zA-Z0-9]@[a-zA-Z]+\s | \s[^a-zA-Z0-9]@[a-zA-Z]+\s/g)
-    const stringReg = new RegExp(/^(@)(?!\s)\w+|(?<=[\-\.\,\%\&\*\(\)\+\=])(@)(?!\s)\w+|(?<=\s)(@)(?!\d)\w+/g);
-  // const stringReg = /(@)\w+/g;
   const handleMessageChange = event => {
     var value = event.target.value;
       try{
@@ -202,7 +115,6 @@ const Chat = () => {
       }
     setMessageSave(value);
   };
-
   const handleSendMessage = event => {
     event.preventDefault();
     if (chatsocket.readyState == chatsocket.OPEN) {
@@ -249,52 +161,74 @@ const Chat = () => {
       console.log('no room of this name found');
     }
   };
-  const userData = (
-    <>
-      <ChatHeader
-        type={isUserlist}
-        onClick={handleHeaderClick}
-        heading={'Chat List'}
-      />
-      <div id="chat">
-        <ChatList
-          data={userList}
-          type={isUserlist}
-          onClick={handleSelectRoom}
-        />
-      </div>
-    </>
-  );
-  const messageData = (
-    <>
-      <ChatHeader
-        type={isUserlist}
-        onClick={handleHeaderClick}
-        onClickBack={handleBackClick}
-        heading={roomName}
-        status={1}
-      />
-      <div id="chat">
-        <ChatList
-          data={messageList}
-          type={isUserlist}
-          onClick={handleMessageClick}
-          user={userName}
-        />
-        <ChatForm
-          onChange={handleMessageChange}
-          onSubmit={handleSendMessage}
-          value={messageSave}
-        />
-      </div>
-    </>
-  );
 
-  return (
-    <StyleMiniChatWrapper id="live-chat">
-      {isUserlist ? userData : messageData}
-    </StyleMiniChatWrapper>
-  );
-};
 
-export default App;
+
+
+  let userId = '';
+  try {
+    userId = JSON.parse(document.querySelector('#user_id').textContent);
+  } catch (TypeError) {
+    userId = '1';
+  }
+  const findLatestMessageID = () => {
+    try {
+      var selector = document.querySelector('#message_list div div');
+      return selector.getAttribute('data-id');
+    } catch (SyntaxError) {
+      return 0;
+    }
+  };
+
+
+
+  /* fetch api rooms */
+  const FETCH_ROOM_URL = window.origin + '/chat/api/' + userId + '/rooms';
+  //    const FETCH_ROOM_URL = "http://localhost:8081" + '/chat/api/' + userId + '/rooms';
+  console.log(FETCH_ROOM_URL);
+
+  const fetchRoomData = () => {
+    fetch(FETCH_ROOM_URL)
+      .then(res => res.json())
+      .then(result => {
+        console.log(result);
+        setUserList(result);
+      });
+  };
+
+
+  useEffect(() => {
+    console.log(user);
+    fetchRoomData();
+  }, []);
+
+  useEffect(() => {
+    if (chatLoading == true && roomId) {
+      chatWebsocket();
+    }
+  }, [roomId]);
+
+  useEffect(() => {
+    try {
+      console.log(chatsocket.readyState);
+      console.log(')))))))))))))))))');
+    } catch {
+      console.log('error');
+    }
+  }, [chatsocket]);
+return(
+
+<Component {...props}  isUserlist ={isUserlist} userList={userList} roomName ={roomName} messageList={messageList} userName={userName}
+    messageSave={messageSave}
+    handleSelectRoom={handleSelectRoom}
+    handleBackClick = {handleBackClick}
+    handleHeaderClick={handleHeaderClick}
+    handleMessageClick={handleMessageClick}
+    handleSendMessage ={handleSendMessage}
+    handleMessageChange={handleMessageChange}
+    />
+)
+}
+
+
+export default Wrapper;
