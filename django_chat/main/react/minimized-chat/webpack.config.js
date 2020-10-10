@@ -1,4 +1,5 @@
 module.exports = {
+    mode:'development',
   module: {
     rules: [
         { test: /\.css$/, use: 'css-loader',exclude:/node_modules/},
@@ -11,8 +12,11 @@ module.exports = {
       }
     ]
   },
-
+watch: true,
+  watchOptions: {
+    ignored: /node_modules/,
+  },
 output:{
-    filename: '../../../greeninfra/static/minimizedChat/main.js',
+    filename: '../../../static/minimized-chat/main.js',
         }
 };
