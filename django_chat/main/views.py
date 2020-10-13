@@ -315,7 +315,7 @@ class ExistingRoomMember(generics.ListAPIView):
 
 
 
-
+@login_required
 def index(request):
     return render(request,'base.html',{})
 
