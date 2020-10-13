@@ -135,13 +135,13 @@ class Room(DateTimeModel):
             editable=False)
     members = models.ManyToManyField(settings.AUTH_USER_MODEL)
     name = models.CharField(max_length=100,default="Discussion Room")
-    def __str__(self):
-        memberset = self.members.all()
-        members_list = []
-        for member in memberset:
-            members_list.append(member.username)
+    # def __str__(self):
+    #     memberset = self.members.all()
+    #     members_list = []
+    #     for member in memberset:
+    #         members_list.append(member.username)
 
-        return "("+self.name+") "+", ".join(members_list)
+    #     return "("+self.name+") "+", ".join(members_list)
 
     def group_name(self):
         print("chat_",self.id)

@@ -1,4 +1,4 @@
-{% load notifications_tags %} {%load staticfiles%} {% notifications_unread as unread_count %}
+{%load staticfiles%} 
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -6,8 +6,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <title>{% block title %}Reportly by AkshyaPower{% endblock title %}</title>
     <!-- css.html(template css)-->
-    {% include 'partials/gray.js.html'%}
-    {% include "main/snippets/css.html"%}
     <!-- datepicker -->
     {% include "main/snippets/bckup_href.html"%}
     <style>

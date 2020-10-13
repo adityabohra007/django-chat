@@ -253,6 +253,8 @@ class ChatConsumer(AsyncJsonWebsocketConsumer):
             else:
                 if self.user in self.room.members.all():
                     self.room_group_name = 'chat_%s' % self.room.id
+                    print(self.room_group_name)
+                    print(self.channel_layer)
                     await self.channel_layer.group_add(
                         self.room_group_name,
                         self.channel_name

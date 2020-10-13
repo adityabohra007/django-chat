@@ -79,7 +79,7 @@ WSGI_APPLICATION = 'django_chat.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'NAME': 'db.sqlite3',
     }
 }
 
@@ -122,3 +122,8 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 ASGI_APPLICATION = "django_chat.routing.application"
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels.layers.InMemoryChannelLayer',
+    },
+}
