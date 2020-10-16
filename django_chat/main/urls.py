@@ -10,6 +10,7 @@ urlpatterns = [
 #	path('chat/<str:uuid>/add/', views.AddMemberView.as_view(), name = "add_member"),
 
         path('mini',views.index),
+        path('fullpage',views.fullpage,name = "fullpage"),
 	#AJAX paths
 	path('ajax/users-list/', views.users_list, name = "users_list"),
 	path('ajax/get-chat-url/', views.get_chat_url, name = "get_chat_url"),

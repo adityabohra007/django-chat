@@ -7,7 +7,7 @@ module.exports = {
     main: path.resolve(__dirname, 'src', 'index.js'),
   },
   output: {
-    path: path.resolve(__dirname, '..', '..','..','static','frontend'),
+    path: path.resolve(__dirname, '..', '..','..','static','chat'),
     //Chunk File
     chunkFilename: '[name].bundle.js',
     //Path to find in for browser
