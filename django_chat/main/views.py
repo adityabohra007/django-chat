@@ -318,6 +318,9 @@ class ExistingRoomMember(generics.ListAPIView):
 @login_required
 def index(request):
     return render(request,'base.html',{})
+@login_required
+def fullpage(request):
+    return render(request,'fullpage.html',{})
 
 
 
