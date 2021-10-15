@@ -21,16 +21,15 @@ class TestIndexView(TenantTestCase):
         room = Room.objects.create()
         room.members.add(user)
         message_1 = Message.objects.create(
-                                        sender=user,
-                                        text="first message",
-                                        room=room
-                                        )
+            sender=user,
+            text="first message",
+            room=room
+        )
         message_2 = Message.objects.create(
-                                        sender=user,
-                                        text="last message",
-                                        room=room
-                                        )
-
+            sender=user,
+            text="last message",
+            room=room
+        )
 
     def test_chat_render_view(self):
         logged_in = self.client.login(username="ted", password="dummypassword")
@@ -38,7 +37,8 @@ class TestIndexView(TenantTestCase):
         self.assertEqual(
             type(found.func), type(IndexView.as_view())
         )
-        response = self.client.get(reverse('django_chatter:index'), follow=True)
+        response = self.client.get(
+            reverse('django_chatter:index'), follow=True)
         self.assertEqual(response.status_code, 200)
         room = Room.objects.all()[0]
         room_url = f"/chat/{room.id}/"
@@ -73,7 +73,8 @@ class TestUsernames(TenantTestCase):
             user.save()
 
     def test_users_list_view(self):
-        logged_in = self.client.login(username="user0", password="dummypassword")
+        logged_in = self.client.login(
+            username="user0", password="dummypassword")
         found = resolve(reverse('django_chatter:users_list'))
         self.assertEqual(found.func, users_list)
         response = self.client.get(
@@ -87,7 +88,8 @@ class TestUsernames(TenantTestCase):
             dict["text"] = user.username
             json_array.append(dict)
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(str(response.content, encoding='utf-8'), json.dumps(json_array))
+        self.assertEqual(str(response.content, encoding='utf-8'),
+                         json.dumps(json_array))
 
 
 class TestMessagesFetch(TenantTestCase):
@@ -113,13 +115,14 @@ class TestMessagesFetch(TenantTestCase):
             dict['sender'] = message.sender.username
             dict['message'] = message.text
             dict['received_room_id'] = room_uuid
-            dict['date_created'] = message.date_created.strftime("%d %b %Y %H:%M:%S %Z")
+            dict['date_created'] = message.date_created.strftime(
+                "%d %b %Y %H:%M:%S %Z")
             messages_array.append(dict)
 
         response = self.client.get(
             f'/ajax/get-messages/{room_uuid}/?page=1',
             HTTP_X_REQUESTED_WITH='XMLHttpRequest'
-            )
+        )
         content = json.loads(response.content)
 
         self.assertEqual(content, messages_array)
@@ -132,13 +135,14 @@ class TestMessagesFetch(TenantTestCase):
             dict['sender'] = message.sender.username
             dict['message'] = message.text
             dict['received_room_id'] = room_uuid
-            dict['date_created'] = message.date_created.strftime("%d %b %Y %H:%M:%S %Z")
+            dict['date_created'] = message.date_created.strftime(
+                "%d %b %Y %H:%M:%S %Z")
             messages_array.append(dict)
 
         response = self.client.get(
             f'/ajax/get-messages/{room_uuid}/?page=2',
             HTTP_X_REQUESTED_WITH='XMLHttpRequest'
-            )
+        )
         content = json.loads(response.content)
 
         self.assertEqual(content, messages_array)
@@ -146,7 +150,7 @@ class TestMessagesFetch(TenantTestCase):
         response = self.client.get(
             f'/ajax/get-messages/{room_uuid}/?page=3',
             HTTP_X_REQUESTED_WITH='XMLHttpRequest'
-            )
+        )
 
         content = json.loads(response.content)
 
