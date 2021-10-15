@@ -1,10 +1,10 @@
-import React from 'react';
-import {StyledHeader} from './styles';
-import {FaArrowLeft} from 'react-icons/fa';
+import React from "react";
+import { StyledHeader } from "./styles";
+import { FaArrowLeft } from "react-icons/fa";
 
-const ChatHeader = props => {
+const ChatHeader = (props) => {
   const isUserList = props.type ? (
-    <h4 className={'chat-header'} onClick={props.onClick}>
+    <h4 className={"chat-header"} onClick={props.onClick}>
       {props.heading}
     </h4>
   ) : (
@@ -13,10 +13,11 @@ const ChatHeader = props => {
         id="chat-back"
         onClick={() => {
           props.onClickBack();
-        }}>
+        }}
+      >
         <FaArrowLeft />
       </p>
-      <h4 className={'chat-header'} onClick={props.onClick}>
+      <h4 className={"chat-header"} onClick={props.onClick}>
         {props.heading}
       </h4>
     </>
@@ -28,4 +29,4 @@ const ChatHeader = props => {
     </StyledHeader>
   );
 };
-export default ChatHeader
+export default ChatHeader;
