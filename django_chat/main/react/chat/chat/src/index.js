@@ -1,21 +1,20 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import App from './components/App';
-import GlobalStyles from './styles/globals';
-import * as serviceWorker from './serviceWorker';
+import React from "react";
+import ReactDOM from "react-dom";
+import App from "./components/App";
+import GlobalStyles from "./styles/globals";
+import * as serviceWorker from "./serviceWorker";
 //import rootReducer from './reducers';
 //const store = createStore(rootReducer)
-
 
 const renderApp = () => {
   ReactDOM.render(
     <div>
       <React.StrictMode>
         <GlobalStyles />
-            <App />
+        <App />
       </React.StrictMode>
     </div>,
-    document.getElementById('root'),
+    document.getElementById("root")
   );
 };
 
