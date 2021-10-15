@@ -1,7 +1,7 @@
-import React, {useEffect, useState} from 'react';
-import {StyleWebsocketStatus, StyledDataList} from './style';
+import React, { useEffect, useState } from "react";
+import { StyleWebsocketStatus, StyledDataList } from "./style";
 
-const ChatList = props => {
+const ChatList = (props) => {
   return (
     <StyledDataList>
       {status}
