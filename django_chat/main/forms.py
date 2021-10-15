@@ -5,12 +5,12 @@ from .models import *
 import datetime
 
 
-
 class UsersForm(forms.Form):
 
     users = forms.MultipleChoiceField(widget=forms.CheckboxSelectMultiple,
-                                          )
-    def __init__(self,users, *args, **kwargs):	
-        super(UsersForm, self).__init__(*args, **kwargs)
-        self.fields['users'].choices =    [ (choice.pk, choice) for choice in users]
+                                      )
 
+    def __init__(self, users, *args, **kwargs):
+        super(UsersForm, self).__init__(*args, **kwargs)
+        self.fields['users'].choices = [
+            (choice.pk, choice) for choice in users]

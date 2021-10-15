@@ -19,6 +19,8 @@ import traceback
 
 # custom get_user method for AuthMiddleware subclass. Mostly similar to
 # https://github.com/django/channels/blob/master/channels/auth.py
+
+
 @database_sync_to_async
 def get_tenant_user(scope):
     """
@@ -35,7 +37,7 @@ def get_tenant_user(scope):
     except KeyError as e:
         raise KeyError(
             "The scope does not contain valid cookies to determine user with."
-            )
+        )
     for key, value in scope.get('headers', []):
         if key == b'host':
             hostname = value.decode('ascii').split(':')[0]
@@ -45,7 +47,8 @@ def get_tenant_user(scope):
         #  Link: https://django-tenants.readthedocs.io/en/latest/use.html#utils
         from django_tenants.utils import get_tenant_domain_model
         domain_model = get_tenant_domain_model()
-        domain = domain_model.objects.select_related('tenant').get(domain=hostname)
+        domain = domain_model.objects.select_related(
+            'tenant').get(domain=hostname)
         try:
             tenant = domain.tenant
         except domain_model.DoesNotExist:
@@ -116,7 +119,7 @@ class MTSchemaMiddleware:
 
 
 # MiddlewareStack to give access to user object in a multitenant environment
-ChatterMTMiddlewareStack = lambda inner: CookieMiddleware(
+def ChatterMTMiddlewareStack(inner): return CookieMiddleware(
     SessionMiddleware(
         MTSchemaMiddleware(
             MTAuthMiddleware(inner)
@@ -126,14 +129,14 @@ ChatterMTMiddlewareStack = lambda inner: CookieMiddleware(
 
 
 # Takes in a list of User objects and returns the UUID of the room created.
-def create_room(user_list,name="Discussion Room"):
+def create_room(user_list, name="Discussion Room"):
     for user in user_list:
         print(user_list)
         if type(user) != get_user_model():
             raise TypeError("Parameters passed to create_room doesn't "
-                "match your project's user model. Please make sure the list "
-                "you passed contains valid User objects as defined in your "
-                "settings.AUTH_USER_MODEL parameter.")
+                            "match your project's user model. Please make sure the list "
+                            "you passed contains valid User objects as defined in your "
+                            "settings.AUTH_USER_MODEL parameter.")
     #rooms_with_member_count = Room.objects.annotate(num_members = Count('members'))
     #rooms = rooms_with_member_count.filter(num_members = len(user_list))
 
