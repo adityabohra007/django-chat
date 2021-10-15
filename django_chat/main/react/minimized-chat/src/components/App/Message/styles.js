@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 export const StyledChatMessage = styled.div`
   cursor: pointer;
   div.sender {
@@ -29,5 +29,3 @@ export const StyledChatMessage = styled.div`
     }
   }
 `;
-
-
