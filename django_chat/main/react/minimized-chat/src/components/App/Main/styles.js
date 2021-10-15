@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 export const StyledHeader = styled.div`
   background: #293239;
   border-radius: 5px 5px 0 0;
@@ -10,7 +10,7 @@ export const StyledHeader = styled.div`
   justify-content: space-between;
 
   &:before {
-    content: '';
+    content: "";
     display: table;
     &:after {
       clear: both;
@@ -41,7 +41,7 @@ export const StyledHeader = styled.div`
     &:before {
       background: #1a8a34;
       border-radius: 50%;
-      content: '';
+      content: "";
       display: inline-block;
       height: 8px;
       margin: 0 8px 0 0;
@@ -114,5 +114,3 @@ export const StyleMiniChatWrapper = styled.div`
     background: #f4f4f4;
   }
 `;
-
-
