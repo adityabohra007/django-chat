@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 /*
 .chat-close {
@@ -58,8 +58,18 @@ export const StyleWebsocketStatus = styled.h5`
 `;
 
 export const StyledReferenceList = styled.ul`
-padding: 0px;list-style: none;margin-bottom: 0px;width: 100%;max-height: 100px;overflow: auto;min-height: 50px;
-li{
-    padding: 10px 15px;color: #245e7b;background: white;text-decoration: underline;border-bottom: 1px solid lightgray;
-}
-`
+  padding: 0px;
+  list-style: none;
+  margin-bottom: 0px;
+  width: 100%;
+  max-height: 100px;
+  overflow: auto;
+  min-height: 50px;
+  li {
+    padding: 10px 15px;
+    color: #245e7b;
+    background: white;
+    text-decoration: underline;
+    border-bottom: 1px solid lightgray;
+  }
+`;
