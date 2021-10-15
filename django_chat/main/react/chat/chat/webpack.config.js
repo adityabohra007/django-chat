@@ -1,20 +1,19 @@
-const webpack = require('webpack');
-const path = require('path');
+const webpack = require("webpack");
+const path = require("path");
 
 module.exports = {
-  mode: 'development',
+  mode: "development",
   entry: {
-    main: path.resolve(__dirname, 'src', 'index.js'),
+    main: path.resolve(__dirname, "src", "index.js"),
   },
   output: {
-    path: path.resolve(__dirname, '..', '..','..','static','chat'),
+    path: path.resolve(__dirname, "..", "..", "..", "static", "chat"),
     //Chunk File
-    chunkFilename: '[name].bundle.js',
+    chunkFilename: "[name].bundle.js",
     //Path to find in for browser
     // publicPath: './../../../static/frontend/',
-    filename: '[name].js',
+    filename: "[name].js",
   },
-
 
   module: {
     rules: [
@@ -22,14 +21,14 @@ module.exports = {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
         use: {
-          loader: 'babel-loader',
+          loader: "babel-loader",
         },
       },
       {
         test: /\.svg$/,
         use: [
           {
-            loader: 'svg-url-loader',
+            loader: "svg-url-loader",
             options: {
               limit: 10000,
             },
@@ -38,13 +37,8 @@ module.exports = {
       },
       {
         test: /\.css$/i,
-        use: ['style-loader', 'css-loader'],
+        use: ["style-loader", "css-loader"],
       },
     ],
   },
-}
-
-
-
-
-
+};
