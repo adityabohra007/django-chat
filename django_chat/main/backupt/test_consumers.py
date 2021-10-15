@@ -24,6 +24,7 @@ TEST_CHANNEL_LAYERS = {
     },
 }
 
+
 def prepare_room_and_user():
     set_up_data()
     room = Room.objects.create()
@@ -33,6 +34,7 @@ def prepare_room_and_user():
     client = Client()
     client.force_login(user=user)
     return client, room, user
+
 
 @pytest.mark.asyncio
 @pytest.mark.django_db(transaction=True)
@@ -44,10 +46,11 @@ async def test_single_tenant_chat_consumer():
         headers=[
             (
                 b'cookie',
-                f'sessionid={client.cookies["sessionid"].value}'.encode('ascii')
+                f'sessionid={client.cookies["sessionid"].value}'.encode(
+                    'ascii')
             ),
             (b'host', b'localhost:8000')]
-        )
+    )
     connected, subprotocol = await communicator.connect()
     assert connected
     data = {
@@ -55,13 +58,14 @@ async def test_single_tenant_chat_consumer():
         'message': "Hello!",
         'sender': user.username,
         'room_id': str(room.id),
-        }
+    }
     await communicator.send_json_to(data)
     response = await communicator.receive_json_from()
     assert response['message'] == "Hello!"
     assert response['sender'] == "user0"
     assert response['room_id'] == str(room.id)
     await communicator.disconnect()
+
 
 @pytest.mark.asyncio
 @pytest.mark.django_db(transaction=True)
@@ -73,10 +77,11 @@ async def test_multitenant_chat_consumer():
         headers=[
             (
                 b'cookie',
-                f'sessionid={client.cookies["sessionid"].value}'.encode('ascii')
+                f'sessionid={client.cookies["sessionid"].value}'.encode(
+                    'ascii')
             ),
             (b'host', b'localhost:8000')]
-        )
+    )
     connected, subprotocol = await communicator.connect()
     assert connected
     data = {
@@ -84,7 +89,7 @@ async def test_multitenant_chat_consumer():
         'message': "Hello!",
         'sender': user.username,
         'room_id': str(room.id),
-        }
+    }
     await communicator.send_json_to(data)
     response = await communicator.receive_json_from()
     response = response
@@ -102,6 +107,7 @@ async def test_multitenant_chat_consumer():
     assert response['date_created'] == time.strftime("%d %b %Y %H:%M:%S %Z")
     await communicator.disconnect()
 
+
 @pytest.mark.asyncio
 @pytest.mark.django_db(transaction=True)
 async def test_harmful_message_in_chat_consumer():
@@ -112,10 +118,11 @@ async def test_harmful_message_in_chat_consumer():
         headers=[
             (
                 b'cookie',
-                f'sessionid={client.cookies["sessionid"].value}'.encode('ascii')
+                f'sessionid={client.cookies["sessionid"].value}'.encode(
+                    'ascii')
             ),
             (b'host', b'localhost:8000')]
-        )
+    )
     connected, subprotocol = await communicator.connect()
     assert connected
     data = {
@@ -123,13 +130,14 @@ async def test_harmful_message_in_chat_consumer():
         'message': "<script>evil();</script>",
         'sender': user.username,
         'room_id': str(room.id),
-        }
+    }
     await communicator.send_json_to(data)
     response = await communicator.receive_json_from()
     assert response['message'] == "&lt;script&gt;evil();&lt;/script&gt;"
     assert response['sender'] == "user0"
     assert response['room_id'] == str(room.id)
     await communicator.disconnect()
+
 
 @pytest.mark.asyncio
 @pytest.mark.django_db(transaction=True)
@@ -151,10 +159,11 @@ async def test_chat_alert_consumer():
         headers=[
             (
                 b'cookie',
-                f'sessionid={client.cookies["sessionid"].value}'.encode('ascii')
+                f'sessionid={client.cookies["sessionid"].value}'.encode(
+                    'ascii')
             ),
             (b'host', b'localhost:8000')]
-        )
+    )
     connected, subprotocol = await chat_communicator.connect()
     assert connected
 
@@ -163,7 +172,8 @@ async def test_chat_alert_consumer():
         headers=[
             (
                 b'cookie',
-                f'sessionid={other_client.cookies["sessionid"].value}'.encode('ascii')
+                f'sessionid={other_client.cookies["sessionid"].value}'.encode(
+                    'ascii')
             ),
             (b'host', b'localhost:8000')]
     )
@@ -175,7 +185,7 @@ async def test_chat_alert_consumer():
         'message': "<script>evil();</script>",
         'sender': user.username,
         'room_id': str(room_with_two.id),
-        }
+    }
     await chat_communicator.send_json_to(data)
     response = await chat_communicator.receive_json_from()
     alert = await user1_alert_communicator.receive_json_from()
@@ -183,7 +193,6 @@ async def test_chat_alert_consumer():
     assert response['sender'] == "user0"
     assert response['room_id'] == str(room_with_two.id)
     await chat_communicator.disconnect()
-
 
     assert alert['message'] == "&lt;script&gt;evil();&lt;/script&gt;"
     assert alert['sender'] == "user0"

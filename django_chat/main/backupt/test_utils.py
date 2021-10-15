@@ -15,6 +15,7 @@ import pytest
 
 from functional_tests.data_setup_for_tests import set_up_data
 
+
 class saveRoomTestCase(TestCase):
     def setUp(self):
         user1 = User.objects.create(username="user1", password="chatter12345")
@@ -30,7 +31,7 @@ class saveRoomTestCase(TestCase):
         self.assertEqual(room_in_db.id, room_id)
 
     def test_create_room_with_invalid_input(self):
-        self.assertRaises(TypeError, lambda: create_room([1,2,3]))
+        self.assertRaises(TypeError, lambda: create_room([1, 2, 3]))
         self.assertRaises(TypeError, lambda: create_room(['1', '2', '2']))
 
     def test_create_room_with_empty_input(self):
@@ -50,6 +51,7 @@ TEST_CHANNEL_LAYERS = {
     },
 }
 
+
 @pytest.mark.asyncio
 @pytest.mark.django_db(transaction=True)
 async def test_no_host_in_headers():
@@ -63,7 +65,8 @@ async def test_no_host_in_headers():
     with pytest.raises(ValueError):
         communicator = WebsocketCommunicator(
             multitenant_application, f"/ws/django_chatter/chatrooms/{room.id}/",
-            )
+        )
+
 
 @pytest.mark.asyncio
 @pytest.mark.django_db(transaction=True)
@@ -78,7 +81,7 @@ async def test_no_session_id_in_headers():
     client.force_login(user=user)
     communicator = WebsocketCommunicator(
         multitenant_application, f"/ws/django_chatter/chatrooms/{room.id}/",
-        headers = [(b'host', b'localhost:8000')]
-        )
+        headers=[(b'host', b'localhost:8000')]
+    )
     with pytest.raises(KeyError):
         connected, subprotocol = await communicator.connect()
