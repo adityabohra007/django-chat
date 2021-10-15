@@ -1,13 +1,13 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import Main from './components/App/Main';
-import * as serviceWorker from './serviceWorker';
+import React from "react";
+import ReactDOM from "react-dom";
+import Main from "./components/App/Main";
+import * as serviceWorker from "./serviceWorker";
 
 ReactDOM.render(
   <React.StrictMode>
     <Main />
   </React.StrictMode>,
-  document.getElementById('mini-chat')
+  document.getElementById("mini-chat")
 );
 
 // If you want your app to work offline and load faster, you can change

@@ -1,26 +1,25 @@
-import React from 'react';
-import {MdSend} from 'react-icons/md';
-import ChatForm from './../Send';
-import ChatList from './../ChatList';
-import ChatHeader from './ChatHeader';
-import {StyledHeader, StyledDataList, StyleMiniChatWrapper} from './styles';
+import React from "react";
+import { MdSend } from "react-icons/md";
+import ChatForm from "./../Send";
+import ChatList from "./../ChatList";
+import ChatHeader from "./ChatHeader";
+import { StyledHeader, StyledDataList, StyleMiniChatWrapper } from "./styles";
 
-
-const Component=(props)=>{
-// return(<h4>Working</h4>)
+const Component = (props) => {
+  // return(<h4>Working</h4>)
 
   // const  userrefReg = new RegExp(/[^a-zA-Z0-9]@[a-zA-Z]+\s | \s[^a-zA-Z0-9]@[a-zA-Z]+\s/g)
-    const stringReg = new RegExp(/^(@)(?!\s)\w+|(?<=[\-\.\,\%\&\*\(\)\+\=])(@)(?!\s)\w+|(?<=\s)(@)(?!\d)\w+/g);
+  const stringReg = new RegExp(
+    /^(@)(?!\s)\w+|(?<=[\-\.\,\%\&\*\(\)\+\=])(@)(?!\s)\w+|(?<=\s)(@)(?!\d)\w+/g
+  );
   // const stringReg = /(@)\w+/g;
-
-
 
   const userData = (
     <>
       <ChatHeader
         type={props.isUserlist}
         onClick={props.handleHeaderClick}
-        heading={'Chat Lis'}
+        heading={"Chat Lis"}
       />
       <div id="chat">
         <ChatList
@@ -62,6 +61,5 @@ const Component=(props)=>{
     </StyleMiniChatWrapper>
   );
 };
-
 
 export default Component;
